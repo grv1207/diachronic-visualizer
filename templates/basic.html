@@ -1,0 +1,1113 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Line Chart</title>
+	<script src="static/dist/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <script src="static/dist/Chart.js"></script>
+
+	<script src="static/dist/hammerjs/hammer.min.js"></script>
+	<script src="static/dist/chartjs-plugin-zoom.js"></script>
+     <script src="static/minified/intro.min.js"></script>
+   <link rel="stylesheet"  type="text/css" href="static/minified/introjs.min.css">
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<script src="static/utils.js"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<link rel="stylesheet"  type="text/css" href="static/style.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<style>
+	canvas{
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
+
+	</style>
+
+</head>
+
+<body>
+
+	<div id="container_body" class="container_body"> 
+			<div id="header" class="header">
+                Diachronic Medical Concept Visualizer <img id="reloadicon" src="static/image/chart.png" alt="chart" width="100px" height="40px">
+                </div>
+        <div id="demo" class="demo_div">
+             <button id="btn_demo" class="randomizeData_button" onclick="introJs().start();">Help</button>
+        </div>
+
+			<div id="container" >
+                  <div id="table_poc" class="poc_table_div">
+            <table data-intro=" This option shows those medical concepts that are used as proof of concept for present study. By selecting any of the below
+                    options, the graph shows similarity score of medical concepts [medication] that were used earlier and also the present ones." data-step="1">
+                <thead>
+                <p style="text-align: center; paddding: 10px; font: 50 1.5em sans-serif; color: red;"> Proof Of Concept</p>
+                </thead>
+
+                 <tr >
+                                <td >
+                                     <button id="prolactinoma" class="button prolactinoma" onclick="poc_func(this)">Microprolactinoma</button>
+                                </td>
+                                 <td >
+                                     <button id="wbc" class="button wbc" onclick="poc_func(this)">White Blood Cancer</button>
+                                </td>
+                                     <td >
+                                     <button id="minoxidil" class="button minox" onclick="poc_func(this)">Minoxidil</button>
+                                </td>
+
+
+
+                                <td >
+                                     <button id="cc" class="button cc" onclick="poc_func(this)">Wart Virus</button>
+                                </td>
+                                 <td >
+                                     <button id="ulcer" class="button ulcer" onclick="poc_func(this)">Peptic Ulcer</button>
+                                </td>
+
+                                     <td >
+                                     <button id="hc" class="button hc" onclick="poc_func(this)">Hepatitis-C</button>
+                                </td>
+
+                            </tr>
+
+            </table>
+        </div>
+         <div id="graph_poc" style="width:63%; float:left; margin-left:15px; margin-top:45px;" data-intro="Chart to display similarity between a chosen medical concept (condition) and a medication across different period starting from 1809 until 2015. " data-step="2">
+
+							<canvas id="canvas_poc"></canvas>
+                    <br>
+                    <br>
+
+					</div>
+                     <div class="div_poc">
+                         <p style="margin-bottom:10px;"> <strong>Track Similarity for a Concept Pair</strong></p>
+                     <table data-intro="Use this to track the change in the similarity of a given concept pair" data-step="3">
+                        <thead>
+
+                        <tr>
+
+                            <td>
+                                <input type="text" id="concept_pair_name_1" list="data_concept_pair_name_1" name="concept pairname 1" class="form-control" style="margin-bottom:6px;" placeholder="Concept Name 1: Microprolactinoma"/>
+                                 <datalist id="data_concept_pair_name_1" >
+
+                                       </datalist>
+                                </td>
+                             <td>
+                                  <input type="text" id="concept_pair_ID_1" name="concept pairID 1" class="form-control" style="margin-bottom:6px; margin-left:6px;" placeholder="Concept ID 1 : C0344452"/>
+                             </td>
+                        </tr>
+                        <tr>
+
+                            <td>
+                                <input type="text" id="concept_pair_name_2" list="data_concept_pair_name_2" name="concept pair name 2" class="form-control" style="margin-bottom:6px;" placeholder="Concept Name 2: Bromocriptine"/>
+                                     <datalist id="data_concept_pair_name_2" >
+
+                                       </datalist>
+                            </td>
+                            <td>
+                                <input type="text" id="concept_pair_ID_2" name="concept pairID 2" class="form-control" style="margin-bottom:6px; margin-left:6px;" placeholder="Concept ID 2 : C0006230"/>
+                            </td>
+                        </tr>
+                        <tr>
+                             <td><button id="btn_concept_pair" class="randomizeData_button" data-intro="returns pairwise similarity across different time" data-step="4" >Get Similarity</button>
+                             </td>
+                             <td></td>
+                        </tr>
+
+
+
+
+
+                </table>
+
+
+                </div>
+            </div>
+            <div style="margin-top:100px; margin-bottom:100px;">
+
+                <div id="graph_neighbor" style="width:63%; float:left; margin:25px; " data-intro="Chart to display TOP-K neighbors for a given medical concept across different period starting from 1809 until 2015." data-step="5">
+
+							<canvas id="canvas_neighbor"></canvas>
+                    <br>
+                    <br>
+
+					</div>
+
+
+				<div id="in_data" class="div_in_data">
+                    <p style="margin-bottom:10px;"> <strong>TOP -K Nearest Neighbor</strong></p>
+                    <div>
+
+                        <table>
+						<tr data-intro="Medical Concept Name, which you want to find neighbors (automatically filled if Concept ID provided). " data-step="6" >
+                            <td>
+                                Concept Name :
+                                </td>
+                            <td>
+                                <input type="text" id="concept_name_id"  list="data_concept_name" class="form-control" style="margin-left:3px;margin-bottom:6px;" placeholder="myelosis; chronic"/>
+                                <datalist id="data_concept_name" >
+
+                                       </datalist>
+                                </td>
+
+						</tr >
+						<tr class="padd_class" data-intro="Medical Concept ID, which you want to find neighbors (automatically filled if Concept Name provided). " data-step="7">
+                            <td >
+                                Concept ID :
+                                </td>
+                            <td>
+                                <input type="text" id="concept_id" name="concept id" class="form-control" style="margin-left:3px;margin-bottom:6px;" placeholder="C0023473"/>
+
+                                </td>
+						</tr>
+                        <tr class="padd_class" data-intro="List of Semantic Types of medical concepts. This limits the Semantic type of returned nearest neighbors. " data-step="8">
+                            <td>
+                                Semantic Type :
+                            </td>
+
+                            <td >
+                                <select name="semantic_Type" class="form-control" id="semantic_Type_id" multiple style="margin-left:3px;margin-bottom:6px;">
+                                  <option value="Therapeutic or Preventive Procedure" title="Therapeutic or Preventive Procedure">Therapeutic or Preventive Procedure</option>
+                                  <option value="Finding" title="Finding">Finding</option>
+                                  <option value="Clinical Drug" title="Clinical Drug">Clinical Drug</option>
+                                  <option value="Diagnostic Procedure" title="Diagnostic Procedure">Diagnostic Procedure</option>
+                                   <option value="Antibiotic" >Antibiotic</option>
+                                  <option value="Pharmacologic Substance" title="Pharmacologic Substance">Pharmacologic Substance</option>
+                                  <option value="Disease or Syndrome" title="Disease or Syndrome">Disease or Syndrome</option>
+                                  <option value="Injury or Poisoning" title="Injury or Poisoning">Injury or Poisoning</option>
+                                  <option value="Bacterium" title="">Bacterium</option>
+                                  <option value="Congenital Abnormality" title="Congenital Abnormality">Congenital Abnormality</option>
+                                  <option value="Mental or Behavioral Dysfunction" title="Mental or Behavioral Dysfunction">Mental or Behavioral Dysfunction</option>
+                                  <option value="Sign or Symptom" title="Sign or Symptom">Sign or Symptom</option>
+                                  <option value="Virus">Virus</option>
+                                  <option value="Neoplastic Process" title="">Neoplastic Process</option>
+                                  </select>
+                            </td>
+						</tr>
+
+						<tr class="padd_class" data-intro="Number of returned Neighbors (Default is 3)." data-step="9">
+
+                            <td>
+                                Neighbors :
+                            </td>
+                             <td>
+                                <select name="neighbor_num" class="form-control" id="neighbor_num_id" style="margin-left:3px;margin-bottom:3px;">
+                                  <option selected="selected" value="3">TOP 3 Neighbors</option>
+                                  <option value="5">TOP 5 Neighbors</option>
+                                  <option value="10">TOP 10 Neighbors</option>
+
+                                  </select>
+                            </td>
+                        </tr>
+                            <tr class="blank_row">
+                                    <td colspan="2"></td>
+                                </tr>
+                            <tr class="blank_row">
+                                    <td colspan="2"></td>
+                                </tr>
+                        <tr class="padd_class">
+                            <td>
+                               <button id="randomizeData" class="randomizeData_button" data-intro="returns (K) neighbors" data-step="10" >Get Neighbors</button>
+                            </td>
+                        </tr>
+                               <tr class="blank_row">
+                                    <td colspan="2"></td>
+                                </tr>
+                            <tr class="blank_row">
+                                <td colspan="2"></td>
+                            </tr>
+                             <tr class="blank_row">
+                                    <td colspan="2"></td>
+                                </tr>
+                            <tr class="blank_row">
+                                <td colspan="2"></td>
+                            </tr>
+
+
+
+					</table>
+                    </div>
+
+
+				<!---->
+
+                    <!--   <div class="div_in_data">
+            <table>
+                 <tr id="row_poc_id" data-intro=" This option shows those medical concepts that are used as proof of concept for present study. By seleting any of the below
+option, the graph shows similarity score of medical concepts(medication) that were used earlier and also the present ones." data-step="7">
+
+                                <td>  <strong>Proof Of Concept  </strong> </td>
+                                <td > <select name="proof_of_concept" class="form-control" id="proof_of_concept_id">
+                                  <option value="">Select Any Concept</option>
+                                  <option value="prolactinoma">Prolactinoma</option>
+                                  <option value="wbc">White Blood Cancer</option>
+                                  <option value="hc">Hepatitis-C</option>
+                                  <option value="cc">Human Papillomavirus</option>
+                                  <option value="ulcer">Peptic Ulcer</option>
+                                  <option value="minoxidle">Minoxidil</option>
+
+                                  </select> </td>
+
+                    </tr>
+            </table>-->
+
+
+                </div>
+            </div>
+
+
+
+
+
+              <div class="modal fade" id="WelcomePage" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" style="text-align: center;" id="exampleModalLongTitle">Welcome to Diachronic Medical Explorer</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                          <p style="text-align: center; paddding: 10px; font: 100 3em sans-serif; color: red;"> Tutorial</p>
+
+                          <div class="embed-responsive embed-responsive-16by9">
+
+                              <video loop controls muted class="embed-responsive-item">
+                                  <source src="static/image/tutorial.mov" type="video/mp4" />
+                                </video>
+                            </div>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                     <!-- Modal -->
+                      <div class="modal fade" id="loadingImage" role="dialog">
+                        <div class="modal-dialog">
+
+                          <!-- Modal content-->
+                          <div class="modal-content">
+
+                            <div class="modal-body">
+                               <img src="static/image/load.gif" alt="loading" width="40%">
+                                <!--<<object class="centerthis" data="static/image/load.gif" type="image/gif">
+                                    </object> -->
+
+                            </div>
+
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal fade" id="concept_id_alert" role="dialog">
+                <div class="modal-dialog">
+
+                  <!-- Modal content-->
+                  <div class="modal-content">
+
+                    <div class="modal-body">
+                        <strong>CONCEPT ID(CUI) REQUIRED</strong>, please provide concept ID .
+
+
+                    </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="drop_down_alert" role="dialog">
+                    <div class="modal-dialog">
+
+                      <!-- Modal content-->
+                      <div class="modal-content">
+
+                        <div class="modal-body">
+                           <strong>SEMANTIC TYPE REQUIRED</strong>,please provide at least one semantic type.
+
+
+                        </div>
+
+                    </div>
+                  </div>
+                </div>
+             <div class="modal fade" id="server_alert" role="dialog">
+                    <div class="modal-dialog">
+
+                      <!-- Modal content-->
+                      <div class="modal-content">
+
+                        <div class="modal-body modal-error">
+                           <strong>ERROR AT BACKEND</strong>, problem at server.
+
+
+                        </div>
+
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+        <div id="pw_simi">
+
+
+</div>
+
+ </div>
+ <div class="mmodal fade" id="slide-bottom-popup" data-keyboard="false" data-backdrop="false">
+                    <div class="mmodal-body">
+
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <p id="text_poc_popup"></p>
+
+                    </div><!-- /.modal-body -->
+                </div><!-- /.modal -->
+
+
+    <div id = "footer" class="footer">
+		Copyright &copy; 2019 Gaurav Vashisth, in cooperation with <a href="https://www.dfki.de/web/">DFKI</a> and <a href="https://www.qu.tu-berlin.de/menue/qu/">QU,TU-Berlin</a>
+	</div>
+
+	
+	
+	<script>
+	        $( document ).ready(function() {
+                $('#WelcomePage').modal('show');
+            });
+
+            $('#reloadicon').click(function() {
+             $('#WelcomePage').modal('hide');
+                location.reload();
+
+            });
+
+
+
+
+
+
+	var url_string = "http://localhost:5000/basic"  //"http://127.0.0.1:5000/basic"  //"http://134.101.0.130:5000/basic" //
+
+	var minoxidil = "The exploration of the cosine similarity for minoxidil and its change in treatment is presented in the Graph.\
+	The figure depicts a high similarity to hypertension in the '70s, which is significantly higher than the high blood pressure.\
+	However, after 1980 the similarity slowly decreases in the next following years. Around 1985 we can see a big drop.\
+	 At the same time the similarity of <b>alopecia</b> and <b>scalp hair loss</b> strongly increase around 1985.\
+	 From the following period, the similarity score of both concepts outperforms hypertension and are significantly higher than hypertension."
+
+
+      var prolactinoma = "Graph presents the semantic shift in the use of different treatment methods for Microprolactinoma.\
+      The first embedding point is seen from the period 1976-1980. Before that period none of the concepts occurred frequently enough\
+      to be considered in the embedding. Within the first period of occurrence (1976-1980) we have a significantly higher similarity\
+      score of Microprolactinoma with <b>Transethmoidal Hypophysectomy</b> in comparison to <b>bromocriptine</b> concepts\
+      and <b>Transsphenoidal surgery</b> which starts decreasing in the next following years. After 1980, we see an increase in the\
+      similarity for all the <b>bromocriptine</b> concepts along with <b>Transsphenoidal surgery</b>, which shows a change in the\
+      treatment method for Microprolactinoma. The similarity score of both the <b>bromocriptine</b> and <b>Transsphenoidal surgery</b>\
+      concepts have significantly higher  similarity score than <b>Transethmoidal Hypophysectomy</b>  from 1981.\
+      Whereas from 1986, after the induction of <b>cabergoline</b>, both of the <b>dopamine agonists</b> and <b>Transsphenoidal surgery</b>\
+      have a higher similarity score than <b>Transethmoidal Hypophysectomy</b>.\
+        Also <b>Cabergoline</b> is getting more popular after 2006 and is then significantly higher than other treatments."
+
+
+    var wbc = "Graph depicts different treatments used for white blood cell cancer. The similarity score for both\
+    <b>Mitobronitol</b> and <b>Myelobromol</b> is high in '70s.\
+    However, after '70s their score starts decreasing but are still significantly higher than\
+     <b>Tyrosine Kinase Inhibitor</b> from 1990's to 2000. From 2001 there is a significantly higher similarity for both\
+     <b>Tyrosine Kinase Inhibitor</b>  and <b>Imatinib</b>  as compared to both <b>Mitobronitol</b> and <b>Myelobromol</b>."
+
+    var hc = "Graph shows a rise in the similarity of second generation of antivirals ( <b>Telaprevir</b> ) from 2011 as compared\
+    with first generations (<b>Polyethylene Interferon Alpha-(2a,2b)</b>) where there is a decrease in the similarity. From 2011 the similarity\
+    score of <b>Telaprevir</b> is significantly higher than the both <b>Polyethylene Interferon Alpha-(2a,2b)</b>, respectively. We can also\
+    notice, that the similarity score <b>Ribavirin</b>  is high this is because it is still used in combination with the new generation of\
+    antiviral medications as well. Before 1976 the occurrence of any antivirals medication concepts that appears close to Hepatitis-C is not high\
+    enough as such concepts are not present."
+
+
+
+    var ulcer = "Graph depicts the change in the treatment of Peptic Ulcers. From 1986 on, both <b>Ulcer surgery</b> \
+     and <b>Gastrectomy</b> are slowly decreasing in similarity. Although, we see a constant decrease in similarity score until\
+     2000 for <b>Ulcer surgery</b>, it is still significantly higher than <b>Triple therapy helicobacter</b>  from 1986 to 1990.\
+     From 1996 to 2000, <b>Ulcer surgery</b> is significantly higher than <b>Triple therapy helicobacter pylori</b> \
+     and at the same time lower than the <b>Helicobacter eradication therapy</b>. From 2001 to 2005, the difference\
+     in the similarity score of <b>Ulcer surgery</b> and <b>Helicobacter eradication therapy</b> is not distinguishable.\
+     However, after 2011 we see a higher similarity score for both <b>Triple therapy helicobacter pylori</b> and <b>Helicobacter eradication therapy</b>."
+
+
+
+    var cc = "Graphs shows a change around year 2006, where <b>Gardasil</b> is an effective prevention vaccine and \
+    that is the reason we see a strongly similarity score it which significantly higher than chemotherapy procedures. \
+     Whereas, chemotherapy procedures such as <b>Pharmacotherapy/Chemotherapy</b> and <b>Therapeutic radiology procedure</b> \
+      are the treatment procedure if vaccination for cervical cancer is not provided to the patient. Since <b>Gardasil</b> \
+      was approved in 2006 by (FDA), so we cannot see similarity point in previous periods."
+
+
+
+
+
+
+
+		var d1 ={'label': '1st Neighbor', 'cui': {'1809_1970': 'C2355575', '1971_1975': 'C2355575', '1976_1980': 'C0457341', '1981_1985': 'C0457341', '1986_1990': 'C0457341', '1991_1995': 'C0457350', '1996_2000': 'C0457341', '2001_2005': 'C0457350', '2006_2010': 'C0457341', '2011_2012': 'C0879484', '2013_2015': 'C0457350'}, 'backgroundColor': '#5D6D7E', 'borderColor': '#5D6D7E', 'cui_name': {'1809_1970': 'bone marrow fibrosis (lab test) ', '1971_1975': 'bone marrow fibrosis (lab test) ', '1976_1980': 'Philadelphia negative (qualifier value) ', '1981_1985': 'Philadelphia negative (qualifier value) ', '1986_1990': 'Philadelphia negative (qualifier value) ', '1991_1995': 'Break cluster region negative ', '1996_2000': 'Philadelphia negative (qualifier value) ', '2001_2005': 'Break cluster region negative ', '2006_2010': 'Philadelphia negative (qualifier value) ', '2011_2012': 'protein tyrosine kinase inhibitor therapy ', '2013_2015': 'Break cluster region negative '}, 'cui_semantic': {'1809_1970': 'Finding', '1971_1975': 'Finding', '1976_1980': 'Finding', '1981_1985': 'Finding', '1986_1990': 'Finding', '1991_1995': 'Finding', '1996_2000': 'Finding', '2001_2005': 'Finding', '2006_2010': 'Finding', '2011_2012': 'Therapeutic or Preventive Procedure', '2013_2015': 'Finding'}, 'data': [0.5881416682874202, 0.5497476947269546, 0.6495606113296786, 0.6365956365856001, 0.6675356711015465, 0.6882216137360925, 0.6736362084067788, 0.6623855040741878, 0.64842590976096, 0.6358667307508014, 0.5415168603326702], 'fill': false, 'showLine': false}
+		var d2 = {'label': '2nd  Neighbor', 'cui': {'1809_1970': 'C0476431', '1971_1975': 'C0741594', '1976_1980': 'C0741594', '1981_1985': 'C0741594', '1986_1990': 'C0457350', '1991_1995': 'C0457341', '1996_2000': 'C0457350', '2001_2005': 'C0457341', '2006_2010': 'C0457350', '2011_2012': 'C0457341', '2013_2015': 'C0457341'}, 'backgroundColor': '#E67E22', 'borderColor': '#E67E22', 'cui_name': {'1809_1970': 'karyotype; abnormal ', '1971_1975': 'bone marrow abnormal ', '1976_1980': 'bone marrow abnormal ', '1981_1985': 'bone marrow abnormal ', '1986_1990': 'Break cluster region negative ', '1991_1995': 'Philadelphia negative (qualifier value) ', '1996_2000': 'Break cluster region negative ', '2001_2005': 'Philadelphia negative (qualifier value) ', '2006_2010': 'Break cluster region negative ', '2011_2012': 'Philadelphia negative (qualifier value) ', '2013_2015': 'Philadelphia negative (qualifier value) '}, 'cui_semantic': {'1809_1970': 'Finding', '1971_1975': 'Finding', '1976_1980': 'Finding', '1981_1985': 'Finding', '1986_1990': 'Finding', '1991_1995': 'Finding', '1996_2000': 'Finding', '2001_2005': 'Finding', '2006_2010': 'Finding', '2011_2012': 'Finding', '2013_2015': 'Finding'}, 'data': [0.5245513702124489, 0.5358655827321895, 0.5982163984895099, 0.5535467904215949, 0.6645486892824422, 0.6831710378700225, 0.6514231344139526, 0.6299814475244284, 0.6181105983376697, 0.617174422507793, 0.5227606125321055], 'fill': false, 'showLine': false}
+		var d3 = {'label': '3rd Neighbor', 'cui': {'1809_1970': 'C0023416', '1971_1975': 'C1334068', '1976_1980': 'C1855710', '1981_1985': 'C2355575', '1986_1990': 'C0864494', '1991_1995': 'C0149615', '1996_2000': 'C0149615', '2001_2005': 'C2242529', '2006_2010': 'C0879484', '2011_2012': 'C0457350', '2013_2015': 'C2355575'}, 'backgroundColor': '#2980B9', 'borderColor': '#2980B9', 'cui_name': {'1809_1970': 'therapeutic leukopheresis (treatment) ', '1971_1975': 'bone marrow hypercellular (lab test) ', '1976_1980': 'Hypoplastic bone marrow ', '1981_1985': 'bone marrow fibrosis (lab test) ', '1986_1990': 'Cytoreductive effect ', '1991_1995': 'transplantation, allogenic bone marrow ', '1996_2000': 'transplantation, allogenic bone marrow ', '2001_2005': 'Allogenic stem cell transplantation ', '2006_2010': 'protein tyrosine kinase inhibitor therapy ', '2011_2012': 'Break cluster region negative ', '2013_2015': 'bone marrow fibrosis (lab test) '}, 'cui_semantic': {'1809_1970': 'Therapeutic or Preventive Procedure', '1971_1975': 'Finding', '1976_1980': 'Finding', '1981_1985': 'Finding', '1986_1990': 'Therapeutic or Preventive Procedure', '1991_1995': 'Therapeutic or Preventive Procedure', '1996_2000': 'Therapeutic or Preventive Procedure', '2001_2005': 'Therapeutic or Preventive Procedure', '2006_2010': 'Therapeutic or Preventive Procedure', '2011_2012': 'Finding', '2013_2015': 'Finding'}, 'data': [0.5147065603690651, 0.5261508898332197, 0.5776867248838672, 0.54772843161514, 0.5804311382758125, 0.6371464044151908, 0.5968085948507965, 0.5866841383806888, 0.5905845565330154, 0.5988215369659599, 0.49299341463967133], 'fill': false, 'showLine': false}
+		var d4= {'label': 'Gardasil ', 'cui': {'1809_1970': 'C1721787', '1971_1975': 'C1721787', '1976_1980': 'C1721787', '1981_1985': 'C1721787', '1986_1990': 'C1721787', '1991_1995': 'C1721787', '1996_2000': 'C1721787', '2001_2005': 'C1721787', '2006_2010': 'C1721787', '2011_2012': 'C1721787', '2013_2015': 'C1721787'}, 'backgroundColor': '#85C1E9', 'borderColor': '#85C1E9', 'cui_name': {'1809_1970': 'Gardasil ', '1971_1975': 'Gardasil ', '1976_1980': 'Gardasil ', '1981_1985': 'Gardasil ', '1986_1990': 'Gardasil ', '1991_1995': 'Gardasil ', '1996_2000': 'Gardasil ', '2001_2005': 'Gardasil ', '2006_2010': 'Gardasil ', '2011_2012': 'Gardasil ', '2013_2015': 'Gardasil '}, 'cui_semantic': {'1809_1970': 'Pharmacologic Substance', '1971_1975': 'Pharmacologic Substance', '1976_1980': 'Pharmacologic Substance', '1981_1985': 'Pharmacologic Substance', '1986_1990': 'Pharmacologic Substance', '1991_1995': 'Pharmacologic Substance', '1996_2000': 'Pharmacologic Substance', '2001_2005': 'Pharmacologic Substance', '2006_2010': 'Pharmacologic Substance', '2011_2012': 'Pharmacologic Substance', '2013_2015': 'Pharmacologic Substance'}, 'data': ['0', '0', '0', '0', '0', '0', '0', '0', 0.57702756, 0.59562504, 0.59982079], 'fill': false, 'showLine': true, 'lineTension': 0}
+        var d5 = { 'label': 'bromocriptine', 'cui': {'1809_1970': 'C0006230', '1971_1975': 'C0006230', '1976_1980': 'C0006230', '1981_1985': 'C0006230', '1986_1990': 'C0006230', '1991_1995': 'C0006230', '1996_2000': 'C0006230', '2001_2005': 'C0006230', '2006_2010': 'C0006230', '2011_2012': 'C0006230', '2013_2015': 'C0006230'}, 'backgroundColor': '#5D6D7E', 'borderColor': '#5D6D7E', 'cui_name': {'1809_1970': 'bromocriptine', '1971_1975': 'bromocriptine', '1976_1980': 'bromocriptine', '1981_1985': 'bromocriptine', '1986_1990': 'bromocriptine', '1991_1995': 'bromocriptine', '1996_2000': 'bromocriptine', '2001_2005': 'bromocriptine', '2006_2010': 'bromocriptine', '2011_2012': 'bromocriptine', '2013_2015': 'bromocriptine'}, 'cui_semantic': {'1809_1970': 'Organic Chemical', '1971_1975': 'Organic Chemical', '1976_1980': 'Organic Chemical', '1981_1985': 'Organic Chemical', '1986_1990': 'Organic Chemical', '1991_1995': 'Organic Chemical', '1996_2000': 'Organic Chemical', '2001_2005': 'Organic Chemical', '2006_2010': 'Organic Chemical', '2011_2012': 'Organic Chemical', '2013_2015': 'Organic Chemical'}, 'data': ['0', '0', 0.45131585, 0.62103021, 0.62598133, 0.59428096, 0.53627586, 0.56609428, 0.48793998, 0.45009214, 0.42320225], 'fill': false, 'showLine': true, 'lineTension': 0}
+		var config = {
+			type: 'line',
+			data: {
+				labels: ['1809_1970', '1971_1975', '1976_1980', '1981_1985', '1986_1990', '1991_1995', '1996_2000','2001_2005','2006_2010','2011_2012','2013_2015'],
+				datasets: [d1,d2,d3]
+			},
+			options: {
+				responsive: true,
+
+				title: {
+					display: true,
+					text: 'TOP-3 Nearest Neighbors',
+
+				        },
+				tooltips: {
+
+
+					callbacks: {
+                    label: function(tooltipItem, data) {
+                    var label = data.datasets[tooltipItem.datasetIndex].cui[tooltipItem.xLabel] || '';
+
+
+                    //label = 'CUI ::' + label
+                    //label = label+' \n'+'CUI Name :: '+cui_name;
+                    //label = label+' \n'+'Semantic_Type :: '+label_semantic;
+
+                    //label = label + '\n'+'Score :: '+tooltipItem.yLabel;
+                     //alert(label);
+                     //['CUI'+' :: '+label, 'Name'+' :: '+cui_name,'Semantic Type'+' :: '+label_semantic];
+                    return 'CUI'+' :: '+label ;
+
+                    },
+                    afterLabel: function(tooltipItem, data) {
+                                    var label_semantic =  data.datasets[tooltipItem.datasetIndex].cui_semantic[tooltipItem.xLabel] || '';
+                                    var cui_name =  data.datasets[tooltipItem.datasetIndex].cui_name[tooltipItem.xLabel] || '';
+                                    return ['NAME'+' :: '+cui_name,'SEMANTIC TYPE'+' :: '+label_semantic,'Score'+ ' :: '+tooltipItem.yLabel];
+            }
+
+                }
+
+				},
+
+				hover: {
+					mode: 'index',
+					intersect: true
+				},
+				pan: {
+						enabled: true,
+						mode: 'y'
+					},
+
+				        scales: {
+					xAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Time Frame'
+						}
+					}],
+					yAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Similarity Score'
+
+						},
+						ticks :{
+						        min: 0,
+                                max: 1,
+                                stepSize: .10
+
+						}
+					}]
+				}
+				
+			}
+		};
+
+        var config_2 = {
+			type: 'line',
+			data: {
+				labels: ['1809_1970', '1971_1975', '1976_1980', '1981_1985', '1986_1990', '1991_1995', '1996_2000','2001_2005','2006_2010','2011_2012','2013_2015'],
+				datasets: [d5]
+			},
+			options: {
+				responsive: true,
+
+				title: {
+					display: true,
+					text: "MICROPROLACTINOMA"
+
+				        },
+				tooltips: {
+
+
+					callbacks: {
+                    label: function(tooltipItem, data) {
+                    var label = data.datasets[tooltipItem.datasetIndex].cui[tooltipItem.xLabel] || '';
+
+
+                    //label = 'CUI ::' + label
+                    //label = label+' \n'+'CUI Name :: '+cui_name;
+                    //label = label+' \n'+'Semantic_Type :: '+label_semantic;
+
+                    //label = label + '\n'+'Score :: '+tooltipItem.yLabel;
+                     //alert(label);
+                     //['CUI'+' :: '+label, 'Name'+' :: '+cui_name,'Semantic Type'+' :: '+label_semantic];
+                    return 'CUI'+' :: '+label ;
+
+                    },
+                    afterLabel: function(tooltipItem, data) {
+                                    var label_semantic =  data.datasets[tooltipItem.datasetIndex].cui_semantic[tooltipItem.xLabel] || '';
+                                    var cui_name =  data.datasets[tooltipItem.datasetIndex].cui_name[tooltipItem.xLabel] || '';
+                                    return ['NAME'+' :: '+cui_name,'SEMANTIC TYPE'+' :: '+label_semantic,'Score'+ ' :: '+tooltipItem.yLabel];
+            }
+
+                }
+
+				},
+
+				hover: {
+					mode: 'index',
+					intersect: true
+				},
+				pan: {
+						enabled: true,
+						mode: 'y'
+					},
+				        scales: {
+					xAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Time Frame'
+						}
+					}],
+					yAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Similarity Score'
+
+						},
+						ticks :{
+						        min: -1,
+                                max: 1
+
+						}
+					}]
+				}
+
+			}
+		};
+
+
+		
+		window.onload = function() {
+			var ctx = document.getElementById('canvas_neighbor').getContext('2d');
+			chart_neighbor = new Chart(ctx, config);
+			var ctx_poc = document.getElementById('canvas_poc').getContext('2d');
+			chart_poc = new Chart(ctx_poc, config_2);
+
+		};
+
+		
+		document.getElementById('randomizeData').addEventListener('click', function() {
+                  //$('#graph_neighbor').show();
+                 //$('#graph_poc').hide();
+
+                var concept_value = document.getElementById("concept_id").value;
+                var semantic_type_to_search =   $('#semantic_Type_id').val();
+                var selected_neighbour =   $('#neighbor_num_id').val();
+
+
+                if (concept_value == "")
+                {
+                    $('#concept_id_alert').modal('show');
+                // alert("There should be a concept to search for!!!!");
+
+                return false;
+                }
+                else if (semantic_type_to_search == "")
+                {
+                $('#drop_down_alert').modal('show');
+
+                //alert("Please select an option!");
+                return false;
+                }
+                else {
+
+
+                 //$('#loadingImage').modal('show');
+                 $('#loadingImage').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    })
+
+                //if == 'top_neighbor_redis' top_neighbor
+                var data_request = {"request_type" : "top_neighbor_redis", "concept" : concept_value, "semantic_type" : semantic_type_to_search, "neighbor" : selected_neighbour}
+
+
+                var json_request = JSON.stringify(data_request);
+                var xhr = new XMLHttpRequest();
+                var eventstring = new String();
+                var start_time = new Date();
+
+                $.ajax({
+                        type: "POST",
+                        url: url_string ,
+                        data: json_request,
+                        success: function(){},
+                        dataType: "json",
+                        contentType : "application/json",
+                        success: function (response) {
+                                    $('#loadingImage').modal('hide');
+                                    var end_time = new Date();
+                                    var diff =(end_time.getTime() - start_time.getTime()) / (24 * 60 * 60 * 1000);
+
+                                    d = Math.abs(Math.round(diff));
+                                    //alert(d.getMinutes())
+
+                                    var eventlist = JSON.stringify(response)
+                                    var vl =0
+                                    var data_list = []
+                                    for (var key in JSON.parse(eventlist)) {
+
+                                     vl = JSON.stringify(JSON.parse(eventlist)[key])
+                                    //alert(vl)
+
+                                    json_vl = JSON.parse(vl)
+
+                                    data_list.push(json_vl)
+                                    //alert(json_vl.semantic_type)
+
+                                    }
+                                    config.data.datasets = data_list ;
+                                    chart_neighbor.options.title.text = json_vl.chartTitle;
+
+                                    //alert(chart_neighbor.options.display )
+                                    chart_neighbor.update();
+
+
+
+
+                             },
+                                error: function() {
+                                    //alert("error at server");
+                                    $('#loadingImage').modal('hide');
+                                    $('#server_alert').modal('show');
+
+
+                                }
+
+
+
+                        });
+
+
+
+
+
+
+                }
+
+
+
+
+
+		});
+		document.getElementById('btn_concept_pair').addEventListener('click', function() {
+                var conceptID_1 =  $('#concept_pair_ID_1').val();
+                var conceptID_2 =  $('#concept_pair_ID_2').val();
+
+
+                 $('#loadingImage').modal({
+                                backdrop: 'static',
+                                keyboard: false
+                            });
+                var data_request = {"request_type" : "cosine_similarity", "concept1" : conceptID_1, "concept2" : conceptID_2}
+                var json_request = JSON.stringify(data_request);
+                var xhr = new XMLHttpRequest();
+                var eventstring = new String();
+
+                 $.ajax({
+                                type: "POST",
+                                url: url_string ,
+                                data: json_request,
+                                success: function(){},
+                                dataType: "json",
+                                contentType : "application/json",
+                                success: function (response) {
+                                            $('#loadingImage').modal('hide');
+                                            var eventlist = JSON.stringify(response)
+                                            var vl =0
+                                            var data_list = []
+                                            for (var key in JSON.parse(eventlist)) {
+                                             vl = JSON.stringify(JSON.parse(eventlist)[key])
+                                            json_vl = JSON.parse(vl)
+                                            data_list.push(json_vl)
+                                            }
+                                            config_2.data.datasets = data_list ;
+                                            chart_poc.options.title.text = json_vl.chartTitle;
+                                            //alert(chart_neighbor.options.display )
+                                            chart_poc.update();
+
+                                     },
+                                        error: function() {
+                                            //alert("error at server");
+                                             $('#loadingImage').modal('hide');
+                                            $('#server_alert').modal('show');
+
+
+                                        }
+
+
+
+                                });
+
+
+
+
+
+
+		});
+
+
+        function poc_func(elem) {
+            //alert(elem.id);
+            $('#loadingImage').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                                        });
+                var selectedVal = elem.id
+
+                var data_request = {"request_type" : "poc", "concept" : selectedVal}
+                var json_request = JSON.stringify(data_request);
+                var xhr = new XMLHttpRequest();
+                var eventstring = new String();
+                console.log(json_request)
+
+                $.ajax({
+                        type: "POST",
+                        url: url_string ,
+                        data: json_request,
+                        success: function(){},
+                        dataType: "json",
+                        contentType : "application/json",
+                        success: function (response) {
+                                    $('#loadingImage').modal('hide');
+
+                                    var end_time = new Date();
+                                    var eventlist = JSON.stringify(response)
+                                    var vl =0
+                                    var data_list = []
+                                    for (var key in JSON.parse(eventlist)) {
+
+                                     vl = JSON.stringify(JSON.parse(eventlist)[key])
+                                    //alert(vl)
+
+                                    json_vl = JSON.parse(vl)
+
+                                    data_list.push(json_vl)
+                                    //alert(json_vl.semantic_type)
+
+                                    }
+                                    config_2.data.datasets = data_list ;
+                                    chart_poc.options.title.text = json_vl.chartTitle;
+                                    chart_poc.update();
+                                     //prolactinoma, wbc,minoxidil,cc,hc,ulcer
+                                      //$("#text_poc_popup").html(selectedVal);
+
+                                     if (selectedVal == 'prolactinoma')
+                                        $("#text_poc_popup").html(prolactinoma);
+
+                                     else if (selectedVal == 'wbc')
+                                         $("#text_poc_popup").html(wbc);
+
+                                     else if (selectedVal == 'minoxidil')
+                                         $("#text_poc_popup").html(minoxidil);
+
+                                     else if (selectedVal == 'cc')
+                                         $("#text_poc_popup").html(cc);
+
+                                     else if (selectedVal == 'hc')
+                                         $("#text_poc_popup").html(hc);
+
+                                     else
+                                         $("#text_poc_popup").html(ulcer);
+
+
+
+                                    $('#slide-bottom-popup').find('.mmodal-body').css({
+
+                                      height:'auto', //probably not needed
+                                      'max-height':'500px;'
+                                    });
+                                    $('#slide-bottom-popup').modal('show');
+
+
+
+                             },
+                                error: function() {
+                                     //alert("error at server");
+                                      $('#loadingImage').modal('hide');
+                                    $('#server_alert').modal('show');
+
+
+                                }
+
+
+
+
+                        });
+
+
+     }
+var eventKey=null;
+$("#concept_name_id").bind('keydown', function (ev) {
+ eventKey=ev.which;
+});
+
+$("#concept_name_id").bind('input', function (ev) {
+    if(eventKey==null || (""==$(this).val() && eventKey==8 ))
+    console.log("click");
+    else {
+    value = $("#concept_name_id").val();
+    get_conceptName("MRCONSO_substring", value,concept_name_id,concept_id, data_concept_name)
+
+    }
+
+
+    eventKey=null;
+});
+
+///////////////////////
+
+$("#concept_pair_name_1").bind('keydown', function (ev) {
+ eventKey=ev.which;
+});
+
+$("#concept_pair_name_1").bind('input', function (ev) {
+    if(eventKey==null || (""==$(this).val() && eventKey==8 ))
+    console.log("click");
+    else {
+   value = $("#concept_pair_name_1").val();
+   get_conceptName("MRCONSO_substring", value,concept_pair_name_1,concept_pair_ID_1, data_concept_pair_name_1)
+
+    }
+
+
+    eventKey=null;
+});
+
+/////////////////////////////////
+$("#concept_pair_name_2").bind('keydown', function (ev) {
+ eventKey=ev.which;
+});
+
+$("#concept_pair_name_2").bind('input', function (ev) {
+    if(eventKey==null || (""==$(this).val() && eventKey==8 ))
+    console.log("click");
+    else {
+    value = $("#concept_pair_name_2").val();
+    get_conceptName("MRCONSO_substring", value,concept_pair_name_2,concept_pair_ID_2, data_concept_pair_name_2)
+
+    }
+
+
+    eventKey=null;
+});
+
+
+
+    //$("#concept_name_id").keyup(function(e) {
+            //value = $("#concept_name_id").val();
+            //get_conceptName("MRCONSO_substring", value,concept_name_id,concept_id, data_concept_name)
+        //});
+
+
+    /*$("#concept_pair_name_1").keyup(function() {
+    value = $("#concept_pair_name_1").val();
+    get_conceptName("MRCONSO_substring", value,concept_pair_name_1,concept_pair_ID_1, data_concept_pair_name_1)
+
+    });
+
+    $("#concept_pair_name_2").keyup(function() {
+    value = $("#concept_pair_name_2").val();
+    get_conceptName("MRCONSO", value,concept_pair_name_2,concept_pair_ID_2, data_concept_pair_name_2)
+
+    });*/
+
+
+
+
+
+
+function get_conceptName(table, query,field,cuiField,datalist){
+
+      autoCan = []
+      dict = {};
+
+      var proxy = "http://localhost:5000/proxysolr"
+      var currentXhr;
+
+
+      if (query.length >=4)
+      {
+      currentXhr && currentXhr.readyState != 4 && currentXhr.abort();
+      $(datalist).empty();
+      console.log(query);
+
+            $.ajax({
+                        type: "POST",
+                        url: proxy,
+                        data: JSON.stringify({"table" : table, "query" : query}),
+                        success: function(){},
+                        dataType: "json",
+                        contentType : "application/json",
+                        success: function (response) {
+                                     var data_response = JSON.stringify(response)
+                                     var parse_data = JSON.parse(data_response);
+                                     parse_data.response.docs.forEach(function (el) {
+                                     //autoCan.push([el["IX_umlsName"], el["IX_umlsCode"]]);
+                                     //dict[el["IX_umlsCode"]] = el["IX_umlsName"];
+                                     dict[el["IX_umlsCode"]] = el["IX_generalText"];
+
+                                         });
+                                             Object.entries(dict).forEach(([key, value]) => $(datalist).append($("<option></option>").val(key).html(value)));
+                                               $(document).on('change', 'input', function(){
+                                                    var options = $(datalist)[0].options;
+                                                    for (var i=0;i<options.length;i++){
+                                                       if (options[i].value == $(this).val())
+                                                         {
+                                                           var cui = $(this).val()
+                                                           //console.log(cui)
+                                                           //console.log(dict[cui])
+                                                           $(cuiField).val(cui);
+                                                           $(field).val(dict[cui]);
+                                                           $(datalist).empty();
+                                                           $(datalist).modal('hide');
+                                                            break;
+                                                         }
+
+                                                    }
+                                                });
+
+                             },
+                                error: function() {
+                                     console.log("error at server");
+
+
+                                }
+
+
+
+                        });
+
+
+
+
+      }
+
+
+
+
+
+       }
+
+
+
+
+
+
+        function autoComplete(query, field, cuiField) {
+        try {
+            xhr.abort();
+        }
+        catch (e) {
+            console.log(e);
+        }
+        autoCan = [];
+
+        let autoField = $(field).siblings(".auto-complete-candidates");
+        autoField.empty();
+
+        if (query.length >= MINIMUM_LEN) {
+
+
+            xhr = $.get("/getCUI/" + query, function (data) {
+                data = JSON.parse(data);
+                data.response.docs.forEach(function (el) {
+                    if (autoCan.length < AUTO_LABEL_LEN)
+                        autoCan.push([el["IX_generalText"], el["IX_umlsCode"], el["IX_alt_labels"], el["IX_sty"]]);
+                });
+                if (autoCan.length) {
+                    autoField.show();
+                    autoCan.forEach(function (el) {
+                        $(`<li>${el[0]}</li>`).click(function () {
+
+                            $(field).val(el[0]);
+                            $(cuiField).val(el[1]);
+                            autoField.hide();
+                        }).mouseover(function () {
+                            let labels = "<p>" + el[2].join("</p><p>") + "</p>";
+                            let cui = el[1];
+                            let category = el[3];
+                            let message = `<div>
+                        <table class="table table-striped table-bordered">
+                          <tbody>
+                             <tr>
+                              <th>CUI</th>
+                              <td>${cui}</td>
+                            </tr>
+                            <tr>
+                              <th>Semantic Type</th>
+                              <td>${category}</td>
+                            </tr>
+                            <tr>
+                              <th>Synonyms</th>
+                              <td>${labels}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        </div>`;
+                            nhpup.popup(message);
+                        }).appendTo(autoField);
+                    })
+                } else {
+                    autoField.hide();
+                }
+            })
+        }
+        else {
+            autoField.hide();
+        }
+
+    }
+
+
+
+		
+	</script>
+</body>
+
+</html>

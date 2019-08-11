@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Scatter Chart</title>
+	<script src="static/dist/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <script src="static/dist/Chart.js"></script>
+	<script src="static/dist/hammerjs/hammer.min.js"></script>
+	<script src="static/dist/chartjs-plugin-zoom.js"></script>
+
+	<script src="static/utils.js"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<link rel="stylesheet"  type="text/css" href="static/style.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<style>
+	canvas {
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
+	</style>
+</head>
+
+<body>
+	<div style="width:75%">
+		<canvas id="canvas"></canvas>
+	</div>
+	<button id="randomizeData">Randomize Data</button>
+	<script>
+		var color = Chart.helpers.color;
+		function generateData() {
+			var data = [];
+			for (var i = 0; i < 7; i++) {
+				data.push({
+					x: randomScalingFactor(),
+					y: randomScalingFactor()
+				});
+			}
+			return data;
+		}
+		var my_data = [{
+        x: 23,
+        y: 23
+    }, {
+        x: 23,
+        y: 50
+    },{
+        x: 23,
+        y:60
+    },{
+        x: 30,
+        y: 50
+    }, {
+        x: 30,
+        y: 60
+    },{
+        x: 30,
+        y: 65
+    },{
+        x: '1976_1980',
+        y: '20'
+    }, {
+        x: '1976_1980',
+        y: '10'
+    },{
+        x: '1976_1980',
+        y: 35
+    },{
+        x: '1981_1985',
+        y: 45
+    }, {
+        x: '1981_1985',
+        y: 65
+    },{
+        x: '1981_1985',
+        y: 65
+    }]
+		var scatterChartData = {
+			datasets: [{
+				label: 'My First dataset',
+				borderColor: window.chartColors.red,
+				backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+				data: my_data
+			}]
+		};
+		window.onload = function() {
+			var ctx = document.getElementById('canvas').getContext('2d');
+			window.myScatter = Chart.Scatter(ctx, {
+				data: scatterChartData,
+				options: {
+					title: {
+						display: true,
+						text: 'Chart.js Scatter Chart'
+					},
+
+				}
+			});
+		};
+		document.getElementById('randomizeData').addEventListener('click', function() {
+			scatterChartData.datasets.data = my_data
+			window.myScatter.update();
+		});
+	</script>
+</body>
+
+</html>

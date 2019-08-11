@@ -1,0 +1,211 @@
+.header {
+    background-color: #24292e;
+    color: hsla(0,0%,100%,.7);
+    font-size: 20px;
+
+    top:0;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    margin-bottom: 150 px;
+
+}
+
+.footer {
+     position:fixed;
+     background-color: #24292e;
+     padding-top: 10px;
+     padding-bottom: 10px;
+     width: 100%;
+     bottom: 0;
+     color: hsla(0,0%,100%,.7);
+     font-size: 14px;
+
+    text-align: center;
+    clear: both;
+
+}
+.text_box {
+width : 120px;
+border-radius: 0p;
+}
+.form-control {
+    min-width: 0;
+    width: 180px !important;
+    color:red;
+}
+.centerthis {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.container_body{
+    margin-top: relative;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.div_button{
+	margin-left: 10px;
+}
+
+.div_in_data{
+	width: 400px;
+
+    margin-left:2px;
+	position: relative;
+	float: right;
+	padding-top: 2px;
+}
+.div_poc{
+width:400px;
+float:right;
+position: relative;
+top: 100px;
+margin-right: 10px
+}
+.randomizeData_button{
+	margin-left: 5px;
+	background-color:#696969;
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  
+  border-radius: 12px;
+}
+.button {
+   /* Green */
+   background-color: #f44336;
+  border: none;
+  color: white;
+  padding: 2px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  height: 55px;
+width:150px;
+  margin:2px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+.modal-error{
+  color: red;
+}
+.poc_table_div{
+width:800px;
+ margin-left: 100px;
+ margin-bottom:10px;
+
+
+}
+.html {
+  scroll-behavior: smooth;
+}
+
+
+.demo_div{
+margin-left:15px;
+margin-top:10px;
+margin-bottom:10px:
+width:100%;
+}
+.prolactinoma{background-color: #4CAF50;}
+.wbc{background-color: #008CBA;}
+.hc{background-color: #f44336;}
+.cc{background-color: #5D6D7E;}
+.ulcer{background-color: #F4D03F;}
+.minox{background-color: #E67E22;}
+
+.table_div {
+ margin-top:10px;
+}
+.blank_row
+{
+    height: 10px !important; /* overwrites any other rules */
+    background-color: #FFFFFF;
+}
+.select_box {
+	margin-top: 5%;
+	height: 100%;
+}
+.padd_class {
+  margin: 3px;
+}
+.mmodal.fade.in .mmodal-body {
+    bottom: 0;
+    opacity: 1;
+    margin-bottom: 48px;
+}
+
+.mmodal-body {
+    position: fixed;
+    right: 5px;
+    padding: 30px 15px 15px 5px;
+    width: 800;
+    height: 500px;
+
+    background-color: #e5e5e5;
+    border-radius: 6px 6px 0 0;
+    opacity: 0;
+    -webkit-transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
+    -moz-transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
+    -o-transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
+    transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
+}
+
+.close {
+    margin-top: -20px;
+    text-shadow: 0 1px 0 #ffffff;
+}
+
+.popup-button {
+    margin-left: 140px;
+    margin-top: 77px;
+    font-weight: bold;
+}
+
+
+.welcome-modal-dialog {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.welcome-modal-content {
+  height: auto;
+  min-height: 100%;
+  border-radius: 0;
+}
+.video-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.video-container video {
+  /* Make video to at least 100% wide and tall */
+  min-width: 100%;
+  min-height: 100%;
+
+  /* Setting width & height to auto prevents the browser from stretching or squishing the video */
+  width: auto;
+  height: auto;
+
+  /* Center the video */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
