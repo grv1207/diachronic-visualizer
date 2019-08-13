@@ -15,7 +15,7 @@ class pairwise_similarity():
         :return: SGNS between two concepts using cosine score
         """
         similarity = []
-        H5FILE = tb.open_file("/Users/gauravvashisth/Documents/UNI-Folder/thesis/model_vec/embedding_index_DB.h5", mode="r",
+        H5FILE = tb.open_file("../model_vec/embedding_index_DB.h5", mode="r",
                             title="embedding DB")
         try:
             for time in TIME_FRAME:
